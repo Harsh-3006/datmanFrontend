@@ -10,9 +10,9 @@ function Navbar() {
   const { credit, getCredit } = useBilling(); // Fetch credit balance
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getCredit(); 
-  }, [navigate]);
+  // useEffect(() => {
+  //   getCredit(); 
+  // }, [navigate]);
 
   const toggleNav = () => setIsOpen(!isOpen);
 
