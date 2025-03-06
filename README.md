@@ -1,12 +1,18 @@
-# React + Vite
+# SMS Scheduler Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is built using **React (Vite)** and **Tailwind CSS** for styling. It serves as the frontend for the SMS scheduling system.
 
-Currently, two official plugins are available:
+## How to Run the Project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+# 1️⃣ Clone the project and navigate into the directory
+git clone https://github.com/your-username/your-repo-name.git && cd your-repo-name
 
-## Expanding the ESLint configuration
+# 2️⃣ Install dependencies
+npm install
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+# 3️⃣ Create a .env file and add the base API URL
+echo "VITE_API_BASE_URL=your_base_api_url" > .env
+
+# 4️⃣ Start the project
+npm run dev
