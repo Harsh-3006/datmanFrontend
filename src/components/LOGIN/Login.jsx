@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import {NavLink} from 'react-router-dom';
+import {useNavigate, NavLink} from 'react-router-dom'
+import useLoginSignup from '../../hooks/useLoginSignup';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate=useNavigate()
+  const {registerMerchant,loginMerchant}=useLoginSignup()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     console.log('Login details:', { email, password });
+    await loginMerchant(email,password)
+    // navigate('/')
+
   };
 
   return (

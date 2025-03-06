@@ -1,33 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { FaBars, FaTimes, FaBell } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { MdSms } from "react-icons/md";
 import toast from 'react-hot-toast';
+import useBilling from '../../hooks/useBilling'; // Import useBilling hook
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [credits, setCredits] = useState(0);
+  const { credit, getCredit } = useBilling(); // Fetch credit balance
   const navigate = useNavigate();
 
-  // Load credits and authentication status from localStorage
   useEffect(() => {
-    const savedCredits = parseInt(localStorage.getItem('credits')) || 0;
-    setCredits(savedCredits);
-    setIsAuthenticated(!!localStorage.getItem('auth'));
-  }, []);
-
-  // Save credits to localStorage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('credits', credits);
-  }, [credits]);
+    getCredit(); 
+  }, [navigate]);
 
   const toggleNav = () => setIsOpen(!isOpen);
 
   const handleLogout = () => {
-    localStorage.clear();
-    setIsAuthenticated(false);
+    localStorage.clear(); // Clears all localStorage data
     toast.error('Logged out');
+    navigate('/login'); // Redirect to login page
   };
 
   return (
@@ -36,7 +28,9 @@ function Navbar() {
         <Link to="/">
           <div className="flex">
             <MdSms className="text-slate-800 text-3xl" />
-            <h2 className="text-slate-900 hidden sm:block font-bold ml-2 text-xl tracking-wider">Merchant SMS & Payments</h2>
+            <h2 className="text-slate-900 hidden sm:block font-bold ml-2 text-xl tracking-wider">
+              Merchant SMS & Payments
+            </h2>
           </div>
         </Link>
 
@@ -46,38 +40,32 @@ function Navbar() {
 
         <div className={`${isOpen ? 'block' : 'hidden'} w-full md:flex md:w-auto`}>
           <ul className="text-slate-800 font-semibold md:flex flex-col space-y-5 md:space-y-0 md:flex-row gap-5 text-[18px] w-full md:w-auto">
-            {/* <li className='mt-10 md:mt-0'>
-              <NavLink to="/" className={({ isActive }) => `${isActive ? 'underline text-slate-800' : 'text-slate-700'} hover:underline hover:border-white cursor-pointer `}>
-                <FaBell className='h-6 w-6 mt-1 mr-5'/>
-              </NavLink>
-            </li> */}
-            {/* <li>
-              <NavLink to="/" className="hover:underline hover:border-white cursor-pointer mt-1 mr-10">
-                Settings
-              </NavLink>
-            </li> */}
 
+            {/* Credit Balance Display */}
             <li className="flex items-center">
+              <span className="bg-white px-4 py-2 border border-gray-600">
+                Credits: {credit ?? 0}
+              </span>
+              <NavLink to="/add-credit">
+
               <button 
-                onClick={() => setCredits(credits + 1)} 
-                className="bg-slate-800 pl-4 pr-4 border-2 border-white rounded-lg hover:bg-slate-700 text-white">
-                <span onClick={(e) => { e.stopPropagation(); setCredits(credits - 1); }} className="text-white-400 mr-3 font-bold">-</span>
-                Credits: {credits}
-                <span className="text-white-400 font-bold ml-3">+</span>
+                className=" bg-slate-600 border border-gray-600 text-white px-3 py-2 hover:bg-slate-700"
+              >
+                +
+              </button>
+              </NavLink>
+            </li>
+
+            {/* Logout Button */}
+            <li>
+              <button 
+                onClick={handleLogout} 
+                className="bg-slate-800 p-2 pl-4 pr-4 border-2 border-white rounded-lg hover:bg-slate-700 text-white"
+              >
+                Logout
               </button>
             </li>
 
-            <li>
-              {isAuthenticated ? (
-                <button onClick={handleLogout} className="bg-slate-800 p-2 pl-4 pr-4 border-2 border-white rounded-lg hover:bg-slate-700 text-white">
-                  Logout
-                </button>
-              ) : (
-                <NavLink to="/login" className="bg-slate-800 p-2 pl-4 pr-4 border-2 border-white rounded-lg hover:bg-slate-700 text-white">
-                  Login
-                </NavLink>
-              )}
-            </li>
           </ul>
         </div>
       </nav>

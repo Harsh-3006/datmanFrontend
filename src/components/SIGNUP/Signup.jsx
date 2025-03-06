@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import {NavLink} from 'react-router-dom'
+import {useNavigate, NavLink} from 'react-router-dom'
+import useLoginSignup from '../../hooks/useLoginSignup';
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -8,19 +9,21 @@ function Signup() {
     password: '',
     confirmPassword: ''
   });
+  const {registerMerchant}=useLoginSignup()
+  const navigate=useNavigate()
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords don't match!");
-    } else {
-      alert("Signup successful!");
     }
+    console.log("user",formData)
+    await registerMerchant(formData)
   };
 
   return (
