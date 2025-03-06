@@ -124,7 +124,7 @@ const useBilling = () => {
       if (response.ok) {
         setCredit(data.credit);
       } else {
-        toast.error(data.message || 'Failed to fetch credit balance');
+        // toast.error(data.message || 'Failed to fetch credit balance');
       }
     } catch (error) {
       console.error('Error fetching credit balance:', error);
