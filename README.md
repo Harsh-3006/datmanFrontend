@@ -4,9 +4,8 @@ This project is built using **React (Vite)** and **Tailwind CSS** for styling. I
 
 ## How to Run the Project
 
-```bash
 # 1️⃣ Clone the project and navigate into the directory
-git clone https://github.com/your-username/your-repo-name.git && cd your-repo-name
+git clone https://github.com/Harsh-3006/datmanFrontend.git && cd your-repo-name
 
 # 2️⃣ Install dependencies
 npm install
